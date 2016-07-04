@@ -21,15 +21,15 @@
     });
   }
 
-  runFunction.$inject = ['$location', 'authService', 'firebaseDataService', 'PROTECTED_PATHS'];
+  runFunction.$inject = ['$location', 'authService', 'PROTECTED_PATHS'];
 
-  function runFunction($location, authService, firebaseDataService, PROTECTED_PATHS) {
+  function runFunction($location, authService, PROTECTED_PATHS) {
 
-    firebaseDataService.root.onAuth(function(authData) {
+    authService.firebaseAuthObject.$onAuthStateChanged(function(authData) {
       if (!authData && pathIsProtected($location.path())) {
         authService.logout();
         $location.path('/login');
-      };
+      }
     });
 
     function pathIsProtected(path) {
